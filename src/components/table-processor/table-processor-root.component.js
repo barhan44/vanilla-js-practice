@@ -3,4 +3,19 @@ export class TableProcessorRootComponent {
     this.$el = document.querySelector(selector);
     this.components = options.components || [];
   }
+
+  getRootNode() {
+    const $root = document.createElement('div');
+
+    this.components.forEach(Component => {
+      const component = new Component();
+      $root.insertAdjacentHTML('beforeend', component.toHTML());
+    });
+
+    return $root;
+  }
+
+  render() {
+    this.$el.append(this.getRootNode());
+  }
 }
