@@ -9,6 +9,7 @@
   "rules": {
     "require-jsdoc": "off",
     "linebreak-style": "off",
+    "operator-linebreak": "off",
     "object-curly-spacing": "off",
     "arrow-parens": "off",
     //    ignore long imports
