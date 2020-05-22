@@ -1,3 +1,5 @@
+import {$} from '@core/utils/dom.util';
+
 export class TableProcessorRootComponent {
   constructor(selector, options) {
     this.$el = document.querySelector(selector);
@@ -5,11 +7,13 @@ export class TableProcessorRootComponent {
   }
 
   getRootNode() {
-    const $root = document.createElement('div');
+    const $root = $.create('div', 'table-processor');
 
     this.components.forEach(Component => {
-      const component = new Component();
-      $root.insertAdjacentHTML('beforeend', component.toHTML());
+      const $el = $.create('div', Component.className);
+      const component = new Component($el);
+      $el.innerHTML = component.toHTML();
+      $root.append($el);
     });
 
     return $root;
