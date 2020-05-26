@@ -4,6 +4,7 @@ import { DOMListener } from '@core/DOMListener';
 export class TableProcessorBaseComponent extends DOMListener {
   constructor($root, options = {}) {
     super($root, options.listeners);
+    this.name = options.name || '';
   }
 
   toHTML() {
@@ -12,5 +13,9 @@ export class TableProcessorBaseComponent extends DOMListener {
 
   init() {
     this.initDOMListeners();
+  }
+
+  destroy() {
+    this.removeDOMListeners();
   }
 }
