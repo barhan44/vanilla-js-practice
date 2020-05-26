@@ -1,6 +1,6 @@
-import { TableProcessorBaseComponent } from '@core/TableProcessorBase.component';
+import { AbstractComponent } from '@core/AbstractComponent';
 
-export class FormulaComponent extends TableProcessorBaseComponent {
+export class FormulaComponent extends AbstractComponent {
   static className = 'table-processor__formula';
 
   constructor($root) {

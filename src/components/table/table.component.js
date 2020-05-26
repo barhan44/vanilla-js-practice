@@ -1,6 +1,6 @@
-import { TableProcessorBaseComponent } from '@core/TableProcessorBase.component';
+import { AbstractComponent } from '@core/AbstractComponent';
 
-export class TableComponent extends TableProcessorBaseComponent {
+export class TableComponent extends AbstractComponent {
   static className = 'table-processor__table';
 
   toHTML() {

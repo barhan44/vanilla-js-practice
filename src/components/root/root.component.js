@@ -1,13 +1,13 @@
 import {$} from '@core/utils/dom.util';
 
-export class TableProcessorRootComponent {
+export class RootComponent {
   constructor(selector, options) {
     this.$el = $(selector);
     this.components = options.components || [];
   }
 
   getRootNode() {
-    const $root = $.create('div', 'table-processor');
+    const $root = $.create('div', 'root');
 
     this.components = this.components.map(Component => {
       const $el = $.create('div', Component.className);
