@@ -5,11 +5,15 @@
     "browser": true,
     "node": true
   },
-  "extends": [
-    "eslint:recommended",
-    "google"
-  ],
+  "extends": ["eslint:recommended", "google"],
   "rules": {
-    "require-jsdoc": "off"
+    "require-jsdoc": "off",
+    "linebreak-style": "off",
+    "operator-linebreak": "off",
+    "object-curly-spacing": "off",
+    "arrow-parens": "off",
+    "indent": "off",
+    //    ignore long imports
+    "max-len": ["error", { "ignorePattern": "^import\\s.+\\sfrom\\s.+;$" }]
   }
 }
