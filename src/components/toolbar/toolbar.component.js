@@ -3,8 +3,8 @@ import { AbstractComponent } from '@core/AbstractComponent';
 export class ToolbarComponent extends AbstractComponent {
   static className = 'table-processor__toolbar';
 
-  constructor($root) {
-    super($root, { name: 'Toolbar', listeners: ['click'] });
+  constructor($root, options) {
+    super($root, { name: 'Toolbar', ...options });
   }
 
   toHTML() {
@@ -26,9 +26,5 @@ export class ToolbarComponent extends AbstractComponent {
             <div class="button">
                 <i class="material-icons">format_underline</i>
             </div>`;
-  }
-
-  onClick(event) {
-    console.log(event.target);
   }
 }
