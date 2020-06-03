@@ -9,6 +9,7 @@ import {
   shouldResize,
 } from '@/components/table/table.helpers';
 import { TableSelection } from '@/components/table/TableSelection';
+import * as actions from '@/store/actions';
 
 export class TableComponent extends AbstractComponent {
   static className = 'table-processor__table';
@@ -48,9 +49,18 @@ export class TableComponent extends AbstractComponent {
     this.$emit('table:select', $cell);
   }
 
+  async resizeTable(event) {
+    try {
+      const data = await resizeHandler(this.$root, event);
+      this.$dispatch(actions.tableResize(data));
+    } catch (e) {
+      console.warn('Resize table error', e.message);
+    }
+  }
+
   onMousedown(event) {
     if (shouldResize(event)) {
-      resizeHandler(this.$root, event);
+      this.resizeTable(event);
     } else if (isCell(event)) {
       const $target = $(event.target);
       if (event.shiftKey) {
