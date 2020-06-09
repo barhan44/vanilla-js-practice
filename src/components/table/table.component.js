@@ -23,7 +23,7 @@ export class TableComponent extends AbstractComponent {
   }
 
   toHTML() {
-    return createTable();
+    return createTable(30, this.store.getState());
   }
 
   prepare() {
