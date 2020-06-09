@@ -6,9 +6,9 @@ export class AbstractComponent extends DOMListener {
     super($root, options.listeners);
     this.name = options.name || '';
     this.emitter = options.emitter;
+    this.subscribe = options.subscribe || [];
     this.store = options.store;
     this.forUnsubscribe = [];
-    this.storeSubscription = null;
 
     this.prepare();
   }
@@ -28,12 +28,14 @@ export class AbstractComponent extends DOMListener {
     this.forUnsubscribe.push(unsub);
   }
 
-  $dispatch(action) {
-    this.store.dispatch(action);
+  storeChanged() {}
+
+  isWatching(key) {
+    return this.subscribe.includes(key);
   }
 
-  $subscribe(fn) {
-    this.storeSubscription = this.store.subscribe(fn);
+  $dispatch(action) {
+    this.store.dispatch(action);
   }
 
   init() {
@@ -43,6 +45,5 @@ export class AbstractComponent extends DOMListener {
   destroy() {
     this.removeDOMListeners();
     this.forUnsubscribe.forEach(unsub => unsub());
-    this.storeSubscription.unsubscribe();
   }
 }
