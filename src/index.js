@@ -8,8 +8,9 @@ import { ToolbarComponent } from '@/components/toolbar/toolbar.component';
 import { FormulaComponent } from '@/components/formula/formula.component';
 import { TableComponent } from '@/components/table/table.component';
 import { rootReducer } from '@/store/rootReducer';
+import { initialState } from '@/store/initial.state';
 
-const store = createStore(rootReducer, storage('table-processor-state'));
+const store = createStore(rootReducer, initialState);
 
 store.subscribe(state => {
   storage('table-processor-state', state);
