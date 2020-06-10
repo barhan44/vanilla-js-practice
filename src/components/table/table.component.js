@@ -11,6 +11,7 @@ import {
 import { TableSelection } from '@/components/table/TableSelection';
 import * as actions from '@/store/actions';
 import { defaultStyles } from '@/constants';
+import { parse } from '@core/utils/parse';
 
 export class TableComponent extends AbstractComponent {
   static className = 'table-processor__table';
@@ -36,9 +37,9 @@ export class TableComponent extends AbstractComponent {
 
     this.selectCell(this.$root.find('[data-id="0:0"]'));
 
-    this.$on('formula:input', text => {
-      this.selection.current.text(text);
-      this.updateTextInStore(text);
+    this.$on('formula:input', value => {
+      this.selection.current.attr('data-value', value).text(parse(value));
+      this.updateTextInStore(value);
     });
 
     this.$on('formula:done', () => {

@@ -38,7 +38,7 @@ export function toInlineStyles(styles = {}) {
 
 export function debounce(fn, wait) {
   let timeout;
-  return (...args) => {
+  return function(...args) {
     const later = () => {
       // eslint-disable-next-line no-invalid-this
       fn.apply(this, args);

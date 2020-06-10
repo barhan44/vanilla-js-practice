@@ -29,7 +29,7 @@ export class FormulaComponent extends AbstractComponent {
     this.$formula = this.$root.find('#formula');
 
     this.$on('table:select', $cell => {
-      this.$formula.text($cell.text());
+      this.$formula.text($cell.data.value);
     });
   }
 
