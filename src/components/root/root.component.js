@@ -1,11 +1,14 @@
 import { $ } from '@core/utils/dom.util';
 import { Emitter } from '@core/Emitter';
+import { StoreSubscriber } from '@core/StoreSubscriber';
 
 export class RootComponent {
   constructor(selector, options) {
     this.$el = $(selector);
     this.components = options.components || [];
+    this.store = options.store;
     this.emitter = new Emitter();
+    this.subscriber = new StoreSubscriber(this.store);
   }
 
   getRootNode() {
@@ -13,6 +16,7 @@ export class RootComponent {
 
     const componentOptions = {
       emitter: this.emitter,
+      store: this.store,
     };
 
     this.components = this.components.map(Component => {
@@ -28,10 +32,12 @@ export class RootComponent {
 
   render() {
     this.$el.append(this.getRootNode());
+    this.subscriber.subscribeComponents(this.components);
     this.components.forEach(component => component.init());
   }
 
   destroy() {
+    this.subscriber.unsubscribeFromStore();
     this.components.forEach(component => component.destroy());
   }
 }
