@@ -1,6 +1,7 @@
 import { $ } from '@core/utils/dom.util';
 import { Emitter } from '@core/Emitter';
 import { StoreSubscriber } from '@core/StoreSubscriber';
+import { updateDate } from '@/store/actions';
 
 export class RootComponent {
   constructor(options) {
@@ -30,6 +31,7 @@ export class RootComponent {
   }
 
   init() {
+    this.store.dispatch(updateDate);
     this.subscriber.subscribeComponents(this.components);
     this.components.forEach(component => component.init());
   }

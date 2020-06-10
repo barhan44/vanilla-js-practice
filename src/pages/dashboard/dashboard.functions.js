@@ -7,7 +7,10 @@ function toHTML(key) {
   return `
     <li class="db__record">
       <a href="#table-processor/${id}">${model.title}</a>
-      <strong>01.01.2020</strong>
+      <strong>
+        ${new Date(model.openDate).toLocaleDateString()}
+        ${new Date(model.openDate).toLocaleTimeString()}
+      </strong>
     </li>
   `;
 }
