@@ -1,5 +1,6 @@
 import { AbstractComponent } from '@core/AbstractComponent';
 import { $ } from '@core/utils/dom.util';
+import { parse } from '@core/utils/parse.function';
 import { createTable } from '@/components/table/table.template';
 import { resizeHandler } from '@/components/table/table.resize';
 import {
@@ -11,7 +12,6 @@ import {
 import { TableSelection } from '@/components/table/TableSelection';
 import * as actions from '@/store/actions';
 import { defaultStyles } from '@/constants';
-import { parse } from '@core/utils/parse';
 
 export class TableComponent extends AbstractComponent {
   static className = 'table-processor__table';
