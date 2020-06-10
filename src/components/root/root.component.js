@@ -2,6 +2,7 @@ import { $ } from '@core/utils/dom.util';
 import { Emitter } from '@core/Emitter';
 import { StoreSubscriber } from '@core/StoreSubscriber';
 import { updateDate } from '@/store/actions';
+import { preventDefault } from '@core/utils/common.util';
 
 export class RootComponent {
   constructor(options) {
@@ -31,6 +32,9 @@ export class RootComponent {
   }
 
   init() {
+    if (process.env.NODE_ENV === 'production') {
+      document.addEventListener('contextmenu', preventDefault);
+    }
     this.store.dispatch(updateDate);
     this.subscriber.subscribeComponents(this.components);
     this.components.forEach(component => component.init());
@@ -39,5 +43,6 @@ export class RootComponent {
   destroy() {
     this.subscriber.unsubscribeFromStore();
     this.components.forEach(component => component.destroy());
+    document.removeEventListener('contextmenu', preventDefault);
   }
 }

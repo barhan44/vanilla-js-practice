@@ -3,7 +3,6 @@ import { storage } from '@core/utils/common.util';
 function toHTML(key) {
   const model = storage(key);
   const id = key.split(':')[1];
-  console.log(id);
   return `
     <li class="db__record">
       <a href="#table-processor/${id}">${model.title}</a>
