@@ -7,14 +7,20 @@ import { ToolbarComponent } from '@/components/toolbar/toolbar.component';
 import { FormulaComponent } from '@/components/formula/formula.component';
 import { TableComponent } from '@/components/table/table.component';
 import { rootReducer } from '@/store/rootReducer';
-import { initialState } from '@/store/initial.state';
+import { normalizeInitialState } from '@/store/initial.state';
+
+function storageName(param) {
+  return 'table-processor:' + param;
+}
 
 export class TableProcessorPage extends Page {
   getRoot() {
-    const store = createStore(rootReducer, initialState);
+    const params = this.params ? this.params : Date.now().toString();
 
+    const state = storage(storageName(params));
+    const store = createStore(rootReducer, normalizeInitialState(state));
     const stateListener = debounce(state => {
-      storage('table-processor-state', state);
+      storage(storageName(params), state);
     }, 300);
 
     store.subscribe(stateListener);
