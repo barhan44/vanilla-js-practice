@@ -1,4 +1,7 @@
 import { AbstractComponent } from '@core/AbstractComponent';
+import { $ } from '@core/utils/dom.util';
+import { changeTitle } from '@/store/actions';
+import { defaultTitle } from '@/constants';
 
 export class HeaderComponent extends AbstractComponent {
   static className = 'table-processor__header';
@@ -6,12 +9,14 @@ export class HeaderComponent extends AbstractComponent {
   constructor($root, options) {
     super($root, {
       name: 'Header',
+      listeners: ['input'],
       ...options,
     });
   }
 
   toHTML() {
-    return `<input type="text" class="input" value="New table" />
+    const title = this.store.getState().title || defaultTitle;
+    return `<input type="text" class="input" value="${title}" />
             <div>
                 <div class="button">
                     <i class="material-icons">delete</i>
@@ -20,5 +25,10 @@ export class HeaderComponent extends AbstractComponent {
                     <i class="material-icons">exit_to_app</i>
                 </div>
             </div>`;
+  }
+
+  onInput(event) {
+    const $target = $(event.target);
+    this.$dispatch(changeTitle($target.text()));
   }
 }
