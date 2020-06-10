@@ -1,6 +1,7 @@
 import { StateComponent } from '@core/StateComponent';
 import { $ } from '@core/utils/dom.util';
 import { createToolbar } from '@/components/toolbar/toolbar.template';
+import { defaultStyles } from '@/constants';
 
 export class ToolbarComponent extends StateComponent {
   static className = 'table-processor__toolbar';
@@ -10,13 +11,7 @@ export class ToolbarComponent extends StateComponent {
   }
 
   prepare() {
-    const initialState = {
-      textAlign: 'left',
-      fontWeight: 'normal',
-      textDecoration: 'none',
-      fontStyle: 'normal',
-    };
-    this.initState(initialState);
+    this.initState(defaultStyles);
   }
 
   get template() {
@@ -31,6 +26,8 @@ export class ToolbarComponent extends StateComponent {
     const $target = $(event.target);
     if ($target.data.type === 'button') {
       const value = JSON.parse($target.data.value);
+      this.$emit('toolbar:applyStyle', value);
+
       const key = Object.keys(value)[0];
       this.setState({ [key]: value[key] });
     }

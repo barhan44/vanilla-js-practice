@@ -94,6 +94,13 @@ class DomUtil {
     });
   }
 
+  getStyles(styles = []) {
+    return styles.reduce((res, style) => {
+      res[style] = this.$el.style[style];
+      return res;
+    }, {});
+  }
+
   addClass(className) {
     this.$el.classList.add(className);
     return this;
