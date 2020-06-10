@@ -2,6 +2,7 @@ import { AbstractComponent } from '@core/AbstractComponent';
 import { $ } from '@core/utils/dom.util';
 import { changeTitle } from '@/store/actions';
 import { defaultTitle } from '@/constants';
+import { debounce } from '@core/utils/common.util';
 
 export class HeaderComponent extends AbstractComponent {
   static className = 'table-processor__header';
@@ -12,6 +13,10 @@ export class HeaderComponent extends AbstractComponent {
       listeners: ['input'],
       ...options,
     });
+  }
+
+  prepare() {
+    this.onInput = debounce(this.onInput, 300);
   }
 
   toHTML() {

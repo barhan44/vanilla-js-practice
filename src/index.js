@@ -1,7 +1,7 @@
 import './scss/index.scss';
 
 import { createStore } from '@core/utils/createStore.function';
-import { storage } from '@core/utils/common.util';
+import { debounce, storage } from '@core/utils/common.util';
 import { RootComponent } from '@/components/root/root.component';
 import { HeaderComponent } from '@/components/header/header.component';
 import { ToolbarComponent } from '@/components/toolbar/toolbar.component';
@@ -12,9 +12,11 @@ import { initialState } from '@/store/initial.state';
 
 const store = createStore(rootReducer, initialState);
 
-store.subscribe(state => {
+const stateListener = debounce(state => {
   storage('table-processor-state', state);
-});
+}, 300);
+
+store.subscribe(stateListener);
 
 const tp = new RootComponent('#app', {
   components: [
