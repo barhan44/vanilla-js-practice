@@ -1,6 +1,6 @@
-import { Page } from '@core/Page';
+import { Page } from '@core/page/Page';
 import { createStore } from '@core/store/createStore.function';
-import { debounce, storage } from '@core/utils/common.util';
+import { StateProcessor } from '@core/page/StateProcessor';
 import { RootComponent } from '@/components/root/root.component';
 import { HeaderComponent } from '@/components/header/header.component';
 import { ToolbarComponent } from '@/components/toolbar/toolbar.component';
@@ -8,22 +8,21 @@ import { FormulaComponent } from '@/components/formula/formula.component';
 import { TableComponent } from '@/components/table/table.component';
 import { rootReducer } from '@/store/rootReducer';
 import { normalizeInitialState } from '@/store/initial.state';
-
-function storageName(param) {
-  return 'table-processor:' + param;
-}
+import { LocalStorageClient } from '@/shared/LocalStorageClient';
 
 export class TableProcessorPage extends Page {
-  getRoot() {
-    const params = this.params ? this.params : Date.now().toString();
+  constructor(param) {
+    super(param);
 
-    const state = storage(storageName(params));
+    this.storeSub = null;
+    this.processor = new StateProcessor(new LocalStorageClient(this.params));
+  }
+
+  async getRoot() {
+    const state = await this.processor.get();
     const store = createStore(rootReducer, normalizeInitialState(state));
-    const stateListener = debounce(state => {
-      storage(storageName(params), state);
-    }, 300);
 
-    store.subscribe(stateListener);
+    this.storeSub = store.subscribe(this.processor.listen);
 
     this.tp = new RootComponent({
       components: [
@@ -44,5 +43,6 @@ export class TableProcessorPage extends Page {
 
   destroy() {
     this.tp.destroy();
+    this.storeSub.unsubscribe();
   }
 }
