@@ -1,5 +1,5 @@
-import { $ } from '@core/utils/dom.util';
-import { ActiveRoute } from '@core/router/ActiveRoute';
+import { $ } from '../utils/dom.util';
+import { ActiveRoute } from './ActiveRoute';
 
 export class Router {
   constructor(selector, routes) {
@@ -21,7 +21,7 @@ export class Router {
     this.changePageHandler();
   }
 
-  changePageHandler(event) {
+  changePageHandler() {
     if (this.page) {
       this.page.destroy();
     }
