@@ -1,5 +1,5 @@
 import { Page } from '@core/Page';
-import { createStore } from '@core/utils/createStore.function';
+import { createStore } from '@core/store/createStore.function';
 import { debounce, storage } from '@core/utils/common.util';
 import { RootComponent } from '@/components/root/root.component';
 import { HeaderComponent } from '@/components/header/header.component';
